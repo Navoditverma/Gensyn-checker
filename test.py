@@ -12,7 +12,7 @@ HTML = '''
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f2f5;
+      background: #f8fafc;
       margin: 0;
       padding: 40px;
       display: flex;
@@ -20,16 +20,35 @@ HTML = '''
       align-items: center;
     }
 
-    h2 {
-      color: #1e293b;
-      font-size: 32px;
-      margin-bottom: 8px;
+    .title {
+      font-size: 38px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #2563eb, #1e40af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
     }
 
     .subtext {
       color: #475569;
       font-size: 16px;
       margin-bottom: 24px;
+    }
+
+    .attribution {
+      font-size: 14px;
+      margin-top: 12px;
+      color: #64748b;
+    }
+
+    .attribution a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .attribution a:hover {
+      text-decoration: underline;
     }
 
     form {
@@ -117,8 +136,9 @@ HTML = '''
   </style>
 </head>
 <body>
-  <h2>Gensyn Peer ID Checker</h2>
+  <div class="title">Gensyn Peer ID Checker</div>
   <div class="subtext">Enter Peer IDs separated by new lines below.</div>
+  <div class="attribution">Created by <a href="https://github.com/Navoditverma" target="_blank">Navodit Verma</a> for fair use and educational purposes only.</div>
 
   <form method="post">
     <textarea name="peer_ids" placeholder="Example:\nQm123...\nQm456...">{{ peer_input }}</textarea>
