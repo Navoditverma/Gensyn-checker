@@ -109,6 +109,19 @@ HTML = '''
       font-style: italic;
     }
 
+    .totals {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e293b;
+  background: #d4a690; /* Light slate */
+  padding: 14px 20px;
+  border-radius: 24px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.4);
+}
+
+
     @media screen and (max-width: 768px) {
       body {
         padding: 20px;
@@ -130,11 +143,9 @@ HTML = '''
   <div class="subtext">
     Created by <a href="https://github.com/Navoditverma" target="_blank">Navodit Verma</a> 
   </div>
-  <div class="subtext">Enter Peer IDs separated by new lines. <br></div>
+  <div class="subtext">Enter Peer IDs separated by new lines.</div>
   <form method="post">
-    <div style="margin-top: ;">
-      <textarea name="peer_ids" placeholder="Example:\nQm123...\nQm456...">{{ peer_input }}</textarea>
-    </div>
+    <textarea name="peer_ids" placeholder="Example:\nQm123...\nQm456...">{{ peer_input }}</textarea>
     <button type="submit">Check</button>
   </form>
 
@@ -161,6 +172,10 @@ HTML = '''
         </tr>
       {% endfor %}
     </table>
+
+    <div class="totals">
+      Total Reward: {{ total_reward }} | Total Score: {{ total_score }}
+    </div>
   {% endif %}
 </body>
 </html>
@@ -177,6 +192,9 @@ def fetch_peer_data(peer_id):
 def home():
     results = {}
     peer_input = ""
+    total_reward = 0
+    total_score = 0
+
     if request.method == 'POST':
         peer_input = request.form['peer_ids']
         peer_ids = [line.strip() for line in peer_input.splitlines() if line.strip()]
@@ -187,11 +205,21 @@ def home():
             for future in as_completed(future_to_pid):
                 pid = future_to_pid[future]
                 try:
-                    results[pid] = future.result()
+                    data = future.result()
+                    results[pid] = data
+                    if not data.get("error"):
+                        total_reward += int(data.get("reward", 0))
+                        total_score += int(data.get("score", 0))
                 except Exception as exc:
                     results[pid] = {"error": str(exc)}
 
-    return render_template_string(HTML, results=results, peer_input=peer_input)
+    return render_template_string(
+        HTML,
+        results=results,
+        peer_input=peer_input,
+        total_reward=total_reward,
+        total_score=total_score
+    )
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
