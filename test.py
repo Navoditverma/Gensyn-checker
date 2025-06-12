@@ -12,7 +12,7 @@ HTML = '''
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f8fafc;
+      background: #f0f2f5;
       margin: 0;
       padding: 40px;
       display: flex;
@@ -20,35 +20,24 @@ HTML = '''
       align-items: center;
     }
 
-    .title {
-      font-size: 38px;
+    h1 {
+      font-size: 40px;
       font-weight: 800;
-      background: linear-gradient(90deg, #2563eb, #1e40af);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 4px;
+      color: #1d4ed8;
+      margin-bottom: 8px;
     }
 
     .subtext {
+      text-align: center;
       color: #475569;
       font-size: 16px;
       margin-bottom: 24px;
     }
 
-    .attribution {
-      font-size: 14px;
-      margin-top: 12px;
-      color: #64748b;
-    }
-
-    .attribution a {
+    .subtext a {
       color: #2563eb;
+      font-weight: bold;
       text-decoration: none;
-      font-weight: 600;
-    }
-
-    .attribution a:hover {
-      text-decoration: underline;
     }
 
     form {
@@ -136,12 +125,16 @@ HTML = '''
   </style>
 </head>
 <body>
-  <div class="title">Gensyn Peer ID Checker</div>
-  <div class="subtext">Enter Peer IDs separated by new lines below.</div>
-  <div class="attribution">Created by <a href="https://github.com/Navoditverma" target="_blank">Navodit Verma</a> for fair use and educational purposes only.</div>
+  <h1>Gensyn Peer ID Tracker</h1>
 
+  <div class="subtext">
+    Created by <a href="https://github.com/Navoditverma" target="_blank">Navodit Verma</a> 
+  </div>
+  <div class="subtext">Enter Peer IDs separated by new lines. <br></div>
   <form method="post">
-    <textarea name="peer_ids" placeholder="Example:\nQm123...\nQm456...">{{ peer_input }}</textarea>
+    <div style="margin-top: ;">
+      <textarea name="peer_ids" placeholder="Example:\nQm123...\nQm456...">{{ peer_input }}</textarea>
+    </div>
     <button type="submit">Check</button>
   </form>
 
